@@ -1,0 +1,23 @@
+{
+  "name": "webcw",
+  "version": "1.0.0",
+  "description": "Web server for cw",
+  "main": "index.js",
+  "type":"module",
+  "scripts": {
+    "test": "node svr.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fauxcat/webcw.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fauxcat/webcw/issues"
+  },
+  "homepage": "https://github.com/fauxcat/webcw#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
