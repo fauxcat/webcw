@@ -1,59 +1,95 @@
-#timer {
-  background-color: #f1f1f1;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  color: #333;
-  margin-bottom: 10px;
-  font-size: 24px;
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-  font-weight: bold;
-  text-align: center;
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f8f8f8;
+  margin: 0;
 }
 
-#controls {
-  padding: 5px;
-  text-align: center;
-}
-
-#countdown {
-  position: relative;
+.container {
+  max-width: 800px;
   margin: auto;
-  margin-top: 50px;
-  margin-bottom: 50px;
-  height: 40px;
-  width: 40px;
-  text-align: center;
+  padding: 20px;
+  background-color: #ffffff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  margin-top: 20px;
 }
 
-#countdown-number {
-  color: black;
-  display: inline-block;
-  line-height: 40px;
+.workout-display {
+  border-bottom: 2px solid #cccccc;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
 }
 
-svg {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 40px;
-  height: 40px;
-  transform: rotateY(-180deg) rotateZ(-90deg);
+#time-elapsed, #time-remaining {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333333;
 }
 
-svg circle {
-  stroke-dasharray: 113px;
-  stroke-dashoffset: 0px;
-  stroke-linecap: round;
-  stroke-width: 2px;
-  stroke: black;
-  fill: none;
-  animation: countdown 30s linear infinite forwards;
+#current-activity {
+  font-size: 20px;
+  color: #008080; 
 }
 
-@keyframes countdown {
-  from {
-    stroke-dashoffset: 0px;
-  }
-  to {
-    stroke-dashoffset: 113px;
-  }
+#controls button {
+  padding: 10px 15px;
+  font-size: 16px;
+  margin: 5px;
+  background-color: #008080;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+#workout-form {
+  margin-top: 20px;
+}
+
+.workout-settings label {
+  display: block;
+  margin: 10px 0;
+  font-weight: bold;
+}
+
+.workout-settings textarea,
+.workout-settings input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}
+
+#add-activity-btn {
+  background-color: #008080;
+  color: #ffffff;
+  padding: 10px 15px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.workout-activities {
+  margin-top: 20px;
+}
+
+#activity-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+#activity-list li {
+  margin: 10px 0;
+  font-size: 16px;
+}
+
+.remove-activity-btn {
+  background-color: #ff4500;
+  color: #ffffff;
+  padding: 5px 10px;
+  font-size: 14px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
 }

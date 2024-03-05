@@ -1,31 +1,58 @@
 <!DOCTYPE html>
-<meta charset="UTF-8">
-<script defer src="index.js"></script>
-<link rel="stylesheet" href="styles.css">
+<html lang="en">
+
 <head>
+    <meta charset="UTF-8">
+    <script defer src="index.js"></script>
     <title>HIIT Timer</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div id="timer">00:00:00</div>
-    <div id="controls">
-        <button onclick="startTimer()">Start</button>
-        <button onclick="pauseTimer()">Pause</button>
-        <button onclick="stopTimer()">Stop</button>
-    </div>
-    <h1>Timer</h1>
-    <p>Circular timer display goes here</p>
 
-    <div id="countdown">
-        <div id="countdown-number"></div>
-            <svg>
-                <circle r="18" cx="20" cy="20"></circle>
-            </svg>
-            </script>
-    </div>
+    
+    <div class="container">
 
-    <div class="clock text-center">
-        <!-- see https://www.codepel.com/date-time/javascript-timer-with-start-stop-pause-button/
-        second attempt at countdown maybe idk the first one sucks kinda -->
+        <!-- Workout Display -->
+        <div class="workout-display">
+            <h2>Current Activity: <span id="current-activity">Rest</span></h2>
+            <p>Time Elapsed: <span id="time-elapsed">00:00:00</span></p>
+            <p>Time Remaining: <span id="time-remaining">00:00</span></p>
+            <p>Instructions: <span id="instructions">Get ready for the next activity!</span></p>
+
+            <p>Displays the current exercise and time remaining</p>
+        </div>
+
+        <!-- Controls -->
+        <div id="controls">
+            <button onclick="startTimer()">Start</button>
+            <button onclick="pauseTimer()">Pause</button>
+            <button onclick="stopTimer()">Stop</button>
+        </div>
+
+        <!-- Workout Settings -->
+        <div class="workout-settings">
+            <h2>Workout Settings</h2>
+            <form id="workout-form">
+                <label for="activity-name">Activity Name:</label>
+                <input type="text" id="activity-name" placeholder="Enter activity name" required>
+
+                <label for="activity-description">Description:</label>
+                <textarea id="activity-description" placeholder="Enter activity description"></textarea>
+
+                <label for="activity-duration">Duration (seconds):</label>
+                <input type="number" id="activity-duration" placeholder="Enter activity duration" required>
+
+                <button type="button" id="add-activity-btn">Add Activity</button>
+            </form>
+        </div>
+    
+        <!-- Workout Activities -->
+        <div class="workout-activities">
+            <h2>Workout Activities</h2>
+            <ul id="activity-list">
+                <!-- Activities will be added here dynamically -->
+            </ul>
+
     </div>
     
     <h1>Exercises</h1>
