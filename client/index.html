@@ -60,13 +60,24 @@
     <p>Gridview style, each exercise has a button with a static gif, name, description</p>
     <p>Clicking button opens window that play the gif and shows the other info again. Then option to add exercise to workout is provided</p>
     
-    <h1>Saved Workouts</h1>
-    <p>Workout list goes here - Buttons made of heading with list of exercises below</p>
-    <p>Create new workout button</p>
-    <p>A workout will be made up of a list of exercises/rest phases and times.</p>
-    <p>Clicking on a workout will open a window that allows the content of the list to be edited</p>
+    <!-- Saved Workouts Section -->
+    <div class="saved-workouts">
+        <h1>Saved Workouts</h1>
+        <button onclick="createNewWorkout()">Create New Workout</button>
+        <ul id="saved-workouts-list">
+            <!-- Saved workouts will be added here dynamically -->
+        </ul>
+    </div>
 
-    
+        <p>Workout list goes here - Buttons made of heading with list of exercises below</p>
+        <p>Create new workout button</p>
+        <p>A workout will be made up of a list of exercises/rest phases and times.</p>
+        <p>Clicking on a workout will open a window that allows the content of the list to be edited</p>
+
+    <!-- Edit Workout Window -->
+    <div class="edit-workout-modal" id="editWorkoutModal">
+        <!-- Content for editing a workout goes here -->
+    </div>
 
 </body>
     

@@ -4,6 +4,7 @@ let s = 0;
 let m = 0;
 let h = 0;
 
+
 function startTimer() {
     timerInterval = setInterval(updateTimer, 1000);
     // Currently broken, if pressed more than once time cant be stopped
@@ -50,12 +51,16 @@ document.addEventListener('DOMContentLoaded', function () {
     //  Global variable for workout data
     let workoutData = [];
 
+    // Global varaible for saved workouts
+    let savedWorkouts = [];
+
     // Get form elements
     const workoutForm = document.querySelector('#workout-form');
     const activityNameInput = document.querySelector('#activity-name');
     const activityDescriptionInput = document.querySelector('#activity-description');
     const activityDurationInput = document.querySelector('#activity-duration');
     const addActivityButton = document.querySelector('#add-activity-btn');
+    const savedWorkoutsList = document.querySelector('#saved-workouts-list');
 
     // Function to update activity list
     function updateActivityList() {
@@ -114,5 +119,61 @@ document.addEventListener('DOMContentLoaded', function () {
         updateActivityList();
     });
 
+    // Function to update saved workouts list
+    function updateSavedWorkoutsList() {
+
+        savedWorkoutsList.innerHTML = ''; // Clear the list
+
+        // Buttons and event listeners for each workout
+        savedWorkouts.forEach(function (workout, index) {
+            const workoutItem = document.createElement('li');
+            const workoutButton = document.createElement('button');
+            workoutButton.textContent = workout.name;
+            workoutButton.classList.add('saved-workout-btn');
+            workoutButton.addEventListener('click', function () {
+                // Handle click on saved workout button - load workout to current activity or smth
+                console.log('Clicked on workout:', workout);
+            });
+
+            const removeButton = document.createElement('button');
+            removeButton.textContent = 'Remove';
+            removeButton.classList.add('remove-workout-btn');
+            removeButton.addEventListener('click', function () {
+                const indexToRemove = parseInt(this.getAttribute('data-index'), 10);
+                savedWorkouts.splice(indexToRemove, 1); // Remove the workout from the array
+                updateSavedWorkoutsList(); // Update the displayed list
+            });
+
+            workoutItem.appendChild(workoutButton);
+            workoutItem.appendChild(removeButton);
+            workoutItem.classList.add('saved-workout-item');
+            workoutItem.setAttribute('data-index', index);
+            savedWorkoutsList.appendChild(workoutItem);
+        });
+
+    }
+
+    // Function to create/save new workout
+    window.createNewWorkout = function () {
+        const newWorkout = {
+            name: prompt('Enter a name for the workout:'),
+            activities: [...workoutData],
+        };
+
+        // Clear current list of activies once workout is saved
+        workoutData = [];
+        updateActivityList();
+
+        savedWorkouts.push(newWorkout);
+        updateSavedWorkoutsList();
+    };
+
+    // Function to show edit workout modal
+    function showEditWorkoutModal(index) {
+        const workout = savedWorkouts[index];
+        console.log('Editing workout:', workout);
+    }
+
     updateActivityList();
+    updateSavedWorkoutsList();
 });
