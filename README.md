@@ -24,7 +24,7 @@ Now the application can be accessed by visiting:
 ### Build a custom HIIT workout from scratch
 Using the provided "Workout Settings" form, you can add any activity you want to a fully customisable workout.  
   
-Workouts can be saved and accessed at any time.
+Workouts can be saved and accessed at any time. Currently a saved workout can be viewed by clicking it and visiting the console to see the list containing the activities that are within the clicked workout.
 
 Every saved workout has a "remove" button that can be used to delete it.
 

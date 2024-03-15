@@ -1,17 +1,19 @@
 // Main Workout Clock
-let timerInterval;
+let timerInterval = null;
 let s = 0;
 let m = 0;
 let h = 0;
 
 
 function startTimer() {
-    timerInterval = setInterval(updateTimer, 1000);
-    // Currently broken, if pressed more than once time cant be stopped
+    if (timerInterval === null) {
+        timerInterval = setInterval(updateTimer, 1000);
+    }
 }
 
 function pauseTimer() {
     clearInterval(timerInterval);
+    timerInterval = null;
 }
 
 function stopTimer() {
@@ -42,12 +44,17 @@ function resetTimer() {
     m = 0;
     h = 0;
     displayTimer();
+    timerInterval = null;
 }
+
 
 
 // Workout form
 
 document.addEventListener('DOMContentLoaded', function () {
+    // LOOK AT REMOVING THIS AND INSTEAD ACCESSING THE ELEMENTS WHEN NEEDED IN SEPERATE FUNCTIONS
+
+
     //  Global variable for workout data
     let workoutData = [];
 
