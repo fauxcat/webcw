@@ -6,7 +6,7 @@ let h = 0;
 let activityTimerInterval = null;
 let currentActivityIndex = 0;
 let isResting = false;
-let restDuration = 10;
+let restDuration = 5;
 
 // Button functions
 
@@ -95,6 +95,7 @@ function updateActivityTimer() {
     } else {
         activityTimer();
     }
+    
 }
 
 function activityTimer() {
@@ -102,8 +103,8 @@ function activityTimer() {
 
     if (currentActivity) {
         if (currentActivity.duration > 0) {
-            currentActivity.duration--;
             displayActivityTimer(currentActivity.name, currentActivity.description, currentActivity.duration);
+            currentActivity.duration--;
         } else {
             // Rest before next activity
             currentActivityIndex++;
@@ -113,18 +114,21 @@ function activityTimer() {
     } else {
         // Workout complete
         clearInterval(activityTimerInterval);
+        pauseMainTimer();
         resetActivityTimer();
         displayActivityTimer('Workout Complete', 'Well done!', 0);
     }
 }
 
 function restTimer() {
-    if (restDuration > 0) {
-        restDuration--;
-        displayActivityTimer('Rest', 'Take a break', restDuration);
-    } else {
-        currentActivityIndex++;
+    restDuration--;
+    if (restDuration === 0) {
         isResting = false;
+        if (currentActivityIndex < workoutData.length) {
+            activityTimer();
+        }
+    } else {
+        displayActivityTimer('Rest', 'Take a break', restDuration);
     }
 
 }
@@ -132,7 +136,7 @@ function restTimer() {
 function displayActivityTimer(name, description, duration) {
     const formattedTime = formatTime(duration);
     document.querySelector("#current-activity").textContent = name;
-    document.querySelector("#time-remaining").textContent = duration;
+    document.querySelector("#time-remaining").textContent = formattedTime;
     document.querySelector("#instructions").textContent = description;
 }
 
@@ -222,6 +226,12 @@ addActivityButton.addEventListener('click', function (event) {
     updateActivityList();
 });
 
+function loadSavedWorkout(workout) {
+
+    workoutData = [...workout.activities];
+    updateActivityList();
+}
+
 // Function to update saved workouts list
 function updateSavedWorkoutsList() {
 
@@ -235,7 +245,7 @@ function updateSavedWorkoutsList() {
         workoutButton.classList.add('saved-workout-btn');
         workoutButton.addEventListener('click', function () {
             // Handle click on saved workout button - load workout to current activity or smth
-            console.log('Clicked on workout:', workout);
+            loadSavedWorkout(workout);
         });
 
         const removeButton = document.createElement('button');
