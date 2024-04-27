@@ -6,15 +6,17 @@ let h = 0;
 let activityTimerInterval = null;
 let currentActivityIndex = 0;
 let isResting = false;
-let restDuration = 5;
+let restDuration = 3;
 
 // Button functions
 
 function startTimers() {
     if (workoutData.length === 0) {
-        alert("Please add an activity to start the workout")
+        displayActivityTimer('Nothing', 'Create or Load a workout to get started!', 0);
         return;
     }
+
+    activityTimer();
     startMainTimer();
     startActivityTimer();
 }
@@ -27,6 +29,8 @@ function pauseTimers() {
 function stopTimers() {
     stopMainTimer();
     stopActivityTimer();
+    displayMainTimer();
+    displayActivityTimer('Nothing', 'Create or Load a workout to get started!', 0);
 }
 
 
@@ -113,6 +117,7 @@ function activityTimer() {
         }
     } else {
         // Workout complete
+        console.log("Workout complete");
         clearInterval(activityTimerInterval);
         pauseMainTimer();
         resetActivityTimer();
@@ -121,16 +126,16 @@ function activityTimer() {
 }
 
 function restTimer() {
-    restDuration--;
-    if (restDuration === 0) {
+    if (restDuration > 0) {
+        restDuration--; // Decrement restDuration
+        displayActivityTimer('Rest', 'Take a break', restDuration);
+    } else {
         isResting = false;
+        restDuration = 5; // Reset restDuration to its initial value
         if (currentActivityIndex < workoutData.length) {
             activityTimer();
         }
-    } else {
-        displayActivityTimer('Rest', 'Take a break', restDuration);
     }
-
 }
 
 function displayActivityTimer(name, description, duration) {
@@ -230,6 +235,12 @@ function loadSavedWorkout(workout) {
 
     workoutData = [...workout.activities];
     updateActivityList();
+
+    // Load workout into timer
+    if (workoutData.length > 0) {
+        displayActivityTimer(workoutData[0].name, workoutData[0].description, workoutData[0].duration);
+    }
+
 }
 
 // Function to update saved workouts list
@@ -279,6 +290,11 @@ window.createNewWorkout = function () {
 
     savedWorkouts.push(newWorkout);
     updateSavedWorkoutsList();
+
+    // Load the first activity into the timer
+    if (newWorkout.activities.length > 0) {
+        displayActivity(newWorkout.activities[0]);
+    }
 };
 
 // Function to show edit workout modal
