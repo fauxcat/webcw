@@ -5,8 +5,6 @@ let m = 0;
 let h = 0;
 let activityTimerInterval = null;
 let currentActivityIndex = 0;
-let isResting = false;
-let restDuration = 3;
 
 // Button functions
 
@@ -94,26 +92,22 @@ function stopActivityTimer() {
 }
 
 function updateActivityTimer() {
-    if (isResting) {
-        restTimer();
-    } else {
-        activityTimer();
-    }
-    
+    activityTimer();
 }
 
 function activityTimer() {
     const currentActivity = workoutData[currentActivityIndex];
 
     if (currentActivity) {
-        if (currentActivity.duration > 0) {
+        if (currentActivity.duration >= 0) {
             displayActivityTimer(currentActivity.name, currentActivity.description, currentActivity.duration);
             currentActivity.duration--;
-        } else {
-            // Rest before next activity
-            currentActivityIndex++;
-            isResting = true;
-            displayActivityTimer('Rest', 'Take a break', restDuration);
+        } else if (currentActivity.restDuration >= 0) {
+            displayActivityTimer('Rest', 'Take a break', currentActivity.restDuration);
+            if (currentActivity.restDuration === 0) {
+                currentActivityIndex++;
+            }
+            currentActivity.restDuration--;
         }
     } else {
         // Workout complete
@@ -122,19 +116,6 @@ function activityTimer() {
         pauseMainTimer();
         resetActivityTimer();
         displayActivityTimer('Workout Complete', 'Well done!', 0);
-    }
-}
-
-function restTimer() {
-    if (restDuration > 0) {
-        restDuration--; // Decrement restDuration
-        displayActivityTimer('Rest', 'Take a break', restDuration);
-    } else {
-        isResting = false;
-        restDuration = 5; // Reset restDuration to its initial value
-        if (currentActivityIndex < workoutData.length) {
-            activityTimer();
-        }
     }
 }
 
@@ -147,7 +128,6 @@ function displayActivityTimer(name, description, duration) {
 
 function resetActivityTimer() {
     currentActivityIndex = 0;
-    isResting = false;
     displayActivityTimer('', '', 0);
 }
 
@@ -171,6 +151,7 @@ const workoutForm = document.querySelector('#workout-form');
 const activityNameInput = document.querySelector('#activity-name');
 const activityDescriptionInput = document.querySelector('#activity-description');
 const activityDurationInput = document.querySelector('#activity-duration');
+const restDurationInput = document.querySelector('#rest-duration');
 const addActivityButton = document.querySelector('#add-activity-btn');
 const savedWorkoutsList = document.querySelector('#saved-workouts-list');
 
@@ -182,7 +163,7 @@ function updateActivityList() {
     // Loop through workout data and create list items
     workoutData.forEach(function (activity, index) {
         const activityItem = document.createElement('li');
-        activityItem.innerHTML = `${activity.name} (${activity.duration} seconds) <button class="remove-activity-btn" data-index="${index}">Remove</button>`;
+        activityItem.innerHTML = `${activity.name} (${activity.duration} seconds, Rest: ${activity.restDuration} seconds) <button class="remove-activity-btn" data-index="${index}">Remove</button>`;
         activityList.appendChild(activityItem);
     });
 
@@ -207,8 +188,9 @@ addActivityButton.addEventListener('click', function (event) {
     const activityName = activityNameInput.value.trim();
     const activityDescription = activityDescriptionInput.value.trim();
     const activityDuration = parseInt(activityDurationInput.value, 10);
+    const restDuration = parseInt(restDurationInput.value, 10);
 
-    if (!activityName || !activityDescription || isNaN(activityDuration) || activityDuration <= 0) {
+    if (!activityName || !activityDescription || isNaN(activityDuration) || activityDuration <= 0 || isNaN(restDuration) || restDuration <= 0) {
         alert('Please fill in all the fields with valid values.');
         return;
     }
@@ -216,7 +198,8 @@ addActivityButton.addEventListener('click', function (event) {
     const activity = {
         name: activityName,
         description: activityDescription,
-        duration: activityDuration
+        duration: activityDuration,
+        restDuration: restDuration,
     };
 
     // Add activity to workout data
@@ -227,6 +210,7 @@ addActivityButton.addEventListener('click', function (event) {
     activityNameInput.value = '';
     activityDescriptionInput.value = '';
     activityDurationInput.value = '';
+    restDurationInput.value = '';
 
     updateActivityList();
 });
