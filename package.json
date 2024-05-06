@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Web server for cw",
   "main": "index.js",
-  "type":"module",
+  "type": "module",
   "scripts": {
     "start": "node svr.js"
   },
@@ -18,6 +18,18 @@
   },
   "homepage": "https://github.com/fauxcat/webcw#readme",
   "dependencies": {
+    "eslinter": "^3.2.1",
     "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "eslint": "^8.57.0",
+    "eslint-config-portsoc": "^1.0.1"
+  },
+  "eslintConfig": {
+    "extends": "portsoc",
+    "root": true,
+    "env": {
+      "browser": true
+    }
   }
 }
