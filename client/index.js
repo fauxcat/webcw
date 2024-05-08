@@ -189,7 +189,7 @@ addActivityButton.addEventListener('click', function (event) {
   const restDuration = parseInt(restDurationInput.value, 10);
 
   if (!activityName || !activityDescription || isNaN(activityDuration) || activityDuration <= 0 || isNaN(restDuration) || restDuration <= 0) {
-    alert('Please fill in all the fields with valid values.');
+    showErrorModal('Please fill in all the fields with valid values.');
     return;
   }
 
@@ -256,10 +256,31 @@ function updateSavedWorkoutsList() {
   });
 }
 
+// window.createNewWorkout = function () {
+//   const newWorkout = {
+//     name: prompt('Enter a name for the workout:'),
+//     activities: [...workoutData],
+//   };
+
+//   // Clear current list of activies once workout is saved
+//   workoutData = [];
+//   updateActivityList();
+
+//   savedWorkouts.push(newWorkout);
+//   updateSavedWorkoutsList();
+
+//   // Load the first activity into the timer
+//   if (newWorkout.activities.length > 0) {
+//     displayActivityTimer(newWorkout.activities[0]);
+//   }
+
+//   saveWorkoutsToLocalStorage(); // Save the updated list to local storage
+// };
+
 // Function to create/save new workout
-window.createNewWorkout = function () {
+function saveWorkoutWithName(workoutName) {
   const newWorkout = {
-    name: prompt('Enter a name for the workout:'),
+    name: workoutName,
     activities: [...workoutData],
   };
 
@@ -276,8 +297,11 @@ window.createNewWorkout = function () {
   }
 
   saveWorkoutsToLocalStorage(); // Save the updated list to local storage
-};
+}
 
+window.createNewWorkout = function () {
+  showWorkoutNameModal();
+};
 
 // Save workout to local storage
 
@@ -292,6 +316,39 @@ function loadWorkoutsFromLocalStorage() {
     savedWorkouts = JSON.parse(serializedWorkouts);
     updateSavedWorkoutsList(); // Update the UI with saved workouts
   }
+}
+
+// Modal functions
+function showErrorModal(message) {
+  const modal = document.querySelector('#errorModal');
+  const modalMessage = document.querySelector('#modal-message');
+  modalMessage.textContent = message;
+  modal.style.display = 'block';
+
+  // Close the modal when the user clicks anywhere outside of it
+  window.onclick = function (event) {
+    if (event.target === modal) {
+      modal.style.display = 'none';
+    }
+  };
+
+  // Close the modal when the user clicks on the close button
+  const closeBtn = document.querySelector('.close')[0];
+  closeBtn.onclick = function () {
+    modal.style.display = 'none';
+  };
+}
+
+function showWorkoutNameModal() {
+  const workoutNameModal = document.querySelector('#workoutNameModal');
+  workoutNameModal.style.display = 'block';
+
+  const saveBtn = document.querySelector('#workoutNameBtn');
+  saveBtn.onclick = function () {
+    const workoutNameInput = document.querySelector('#workoutNameInput').value.trim();
+    saveWorkoutWithName(workoutNameInput);
+    workoutNameModal.style.display = 'none';
+  };
 }
 
 loadWorkoutsFromLocalStorage();
