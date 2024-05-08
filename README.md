@@ -36,7 +36,7 @@ Once an activity is created, it is added to a list for the current workout you a
   
 Multiple activities can be added to and removed from the current workout at any time before saving.
 
-Once you have added the right activities to your workout, you can save the workout.
+Once you have added the right activities to your workout, you can save the workout (local storage).
 
 ### Start, stop and pause workouts
 A provided timer is comes with three buttons that allow the workout duration to be tracked.  
@@ -48,6 +48,12 @@ The "pause" button pauses the timer at its current time and can be continued by 
 The "stop" button clears the timer, resetting it to 0 and allowing it to be started again.
 
 ### Use of A.I.
+
+#### Github Copilot
+
+Through the development of this project, I used Github Copilot's Auto-completions intermittently when I needed some pointers on how I should implement a feature. 
+
+I did not copy any full methods, algorithms, or approaches but instead took fragments from Copilot's completions and applied these anywhere I saw fit, or anywhere that I believe my code could be improved. 
 
 #### PROMPT
 
@@ -75,3 +81,23 @@ I received a simple local server and client project along with a guide to creati
 - "Add buttons for adding activities."
   
 While these are quite basic steps, they helped me to create my initial design and develop a strong foundation to build up from.
+
+#### PROMPT
+
+```
+when creating a web application, what is a better alternative to using alerts that appear at the top of the browser for user input?
+```
+
+This resulted in several suggestions including: modal windows, toasts or notifications, inline validation, and a snackbar.
+
+### Other Resources 
+
+Here I will list resources that I used when I had no idea how to start developing a feature and needed a foundation to work from.
+
+https://css-tricks.com/how-to-create-an-animated-countdown-timer-with-html-css-and-javascript/
+
+https://codepen.io/zebateira/pen/VvqJwm
+
+https://www.codepel.com/date-time/javascript-timer-with-start-stop-pause-button/
+
+
